@@ -4,21 +4,22 @@
 
 
 using namespace std;
+int Pocket[POCKET_SIZE] = { 0, };
 
-
-
-int main() 
+void Initialize() 
 {
 	srand((unsigned int)time(NULL));
-	int Pocket[POCKET_SIZE] = { 0, };
 
-	for (int Index = 0; Index < POCKET_SIZE; Index++) 
+	for (int Index = 0; Index < POCKET_SIZE; Index++)
 	{
-		Pocket[Index] = Index+1;
+		Pocket[Index] = Index + 1;
 	}
+}
 
+void Shuffle() 
+{
 	int Temp;
-	for (int Count = 0; Count < POCKET_SIZE *100; Count++) 
+	for (int Count = 0; Count < POCKET_SIZE * 100; Count++)
 	{
 		int First = rand() % POCKET_SIZE;
 		int Second = rand() % POCKET_SIZE;
@@ -26,12 +27,21 @@ int main()
 		Pocket[First] = Pocket[Second];
 		Pocket[Second] = Temp;
 	}
-	
-	for (int Index = 0; Index < POCKET_SIZE; Index++) 
+}
+
+void Print() 
+{
+	for (int Index = 0; Index < POCKET_SIZE; Index++)
 	{
 		cout << Pocket[Index] << ", ";
 	}
+}
 
+int main() 
+{
+	Initialize();
+	Shuffle();
+	Print();
 }
 
 //int RandomRangeDemo(int RangeMin, int RangeMax) {
