@@ -1,137 +1,99 @@
 #include <iostream>
-#include <cstdlib>
+#include <algorithm>
 #include <string>
-#define CARD_NUMBER	52
+
+#define CARD_COUNT	52
 
 
 using namespace std;
-string StrDeck[CARD_NUMBER] = { "", };
+
+int Deck[CARD_COUNT] = { 0, };
 int Count = 0;
 
-int Initialize() 
+void Initialize() 
 {
-	for (int Index = 0; Index < CARD_NUMBER; Index++)
+	srand((unsigned int)time(NULL));
+	
+	for (int Index = 0; Index < CARD_COUNT; Index++)
 	{
-		if (Index / 13 == 0) {
-			if (Index % 13 == 1)
-			{
-				StrDeck[Index] = "¢½ A";
-			}
-			else if (Index % 13 < 10) 
-			{
-				StrDeck[Index] = "¢½ " + to_string((Index % 13)+1);
-			}
-			else if (Index % 13 == 10)
-			{
-				StrDeck[Index] = "¢½ J";
-			}
-			else if (Index % 13 == 11)
-			{
-				StrDeck[Index] = "¢½ Q";
-			}
-			else if (Index % 13 == 12)
-			{
-				StrDeck[Index] = "¢½ K";
-			}
-		}
-		else if (Index / 13 == 1) {
-			if (Index % 13 == 1)
-			{
-				StrDeck[Index] = "¡Þ A";
-			}
-			else if (Index % 13 < 10)
-			{
-				StrDeck[Index] = "¡Þ " + to_string((Index % 13) + 1);
-			}
-			else if (Index % 13 == 10)
-			{
-				StrDeck[Index] = "¡Þ J";
-			}
-			else if (Index % 13 == 11)
-			{
-				StrDeck[Index] = "¡Þ Q";
-			}
-			else if (Index % 13 == 12)
-			{
-				StrDeck[Index] = "¡Þ K";
-			}
-		}
-		else if (Index / 13 == 2) {
-			if (Index % 13 == 1)
-			{
-				StrDeck[Index] = "¢À A";
-			}
-			else if (Index % 13 < 10)
-			{
-				StrDeck[Index] = "¢À " + to_string((Index % 13) + 1);
-			}
-			else if (Index % 13 == 10)
-			{
-				StrDeck[Index] = "¢À J";
-			}
-			else if (Index % 13 == 11)
-			{
-				StrDeck[Index] = "¢À Q";
-			}
-			else if (Index % 13 == 12)
-			{
-				StrDeck[Index] = "¢À K";
-			}
-		}
-		else if (Index / 13 == 3) {
-			if (Index % 13 == 1)
-			{
-				StrDeck[Index] = "¢¼ A";
-			}
-			else if (Index % 13 < 10)
-			{
-				StrDeck[Index] = "¢¼ " + to_string((Index % 13) + 1);
-			}
-			else if (Index % 13 == 10)
-			{
-				StrDeck[Index] = "¢¼ J";
-			}
-			else if (Index % 13 == 11)
-			{
-				StrDeck[Index] = "¢¼ Q";
-			}
-			else if (Index % 13 == 12)
-			{
-				StrDeck[Index] = "¢¼ K";
-			}
-		}
+		Deck[Index] = Index;
 	}
-	return 0;
 }
 
 void Shuffle() 
 {
-	srand((unsigned int)time(NULL));
-	string Temp;
-	for (int Count = 0; Count < CARD_NUMBER * 100; Count++)
+	int Temp = 0;
+	for (int Count = 0; Count < CARD_COUNT * 100; Count++)
 	{
-		int First = rand() % CARD_NUMBER;
-		int Second = rand() % CARD_NUMBER;
-		Temp = StrDeck[First];
-		StrDeck[First] = StrDeck[Second];
-		StrDeck[Second] = Temp;
+		int First = rand() % CARD_COUNT;
+		int Second = rand() % CARD_COUNT;
+		Temp = Deck[First];
+		Deck[First] = Deck[Second];
+		Deck[Second] = Temp;
 	}
+}
+
+int PrintCard(int CardRealNumber)
+{
+	int CardType = CardRealNumber / 13;
+	int CardNumber = CardRealNumber % 13 + 1;
+	int Score = CardNumber;
+
+	string Types[4] = {
+		"¢¾",
+		"¡ß",
+		"¢À",
+		"¢¼"
+	};
+	
+	cout << Types[CardType] << " ";
+	
+	if(CardNumber == 1)
+	{
+		cout << "A" << endl;
+	}
+	else if (CardNumber == 11)
+	{
+		cout << "J" << endl;
+	}
+	else if (CardNumber == 12)
+	{
+		cout << "Q" << endl;
+	}
+	else if (CardNumber == 13)
+	{
+		cout << "K" << endl;
+	}
+	else 
+	{
+		cout << CardNumber << endl;
+	}
+	return Score;
 }
 
 void Start() 
 {
+	int ComputerScore = 0;
+	int PlayerScore = 0;
 	cout << "Computer" << endl << "============" << endl;
-	cout << StrDeck[0] << ", " << StrDeck[1] << endl;
+	ComputerScore += PrintCard(Deck[0]);
+	ComputerScore += PrintCard(Deck[1]);
+	cout << "Computer Score : " << ComputerScore << endl;
+
 	cout << "Player" << endl << "============" << endl;
-	cout << StrDeck[2] << ", " << StrDeck[3] << endl;
+	PlayerScore += PrintCard(Deck[2]);
+	PlayerScore += PrintCard(Deck[3]);
+	cout << "Player Score : " << PlayerScore << endl;
 	Count = 3;
 }
-	
+
 int main() 
 {
-	Count = Initialize();
+	Initialize();
 	Shuffle();
 	Start();
+
+	return 0;
 }
 
 //int RandomRangeDemo(int RangeMin, int RangeMax) {
