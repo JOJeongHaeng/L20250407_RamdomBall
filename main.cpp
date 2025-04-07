@@ -1,47 +1,137 @@
 #include <iostream>
 #include <cstdlib>
-#define POCKET_SIZE	52
+#include <string>
+#define CARD_NUMBER	52
 
 
 using namespace std;
-int Pocket[POCKET_SIZE] = { 0, };
+string StrDeck[CARD_NUMBER] = { "", };
+int Count = 0;
 
-void Initialize() 
+int Initialize() 
 {
-	srand((unsigned int)time(NULL));
-
-	for (int Index = 0; Index < POCKET_SIZE; Index++)
+	for (int Index = 0; Index < CARD_NUMBER; Index++)
 	{
-		Pocket[Index] = Index + 1;
+		if (Index / 13 == 0) {
+			if (Index % 13 == 1)
+			{
+				StrDeck[Index] = "¢½ A";
+			}
+			else if (Index % 13 < 10) 
+			{
+				StrDeck[Index] = "¢½ " + to_string((Index % 13)+1);
+			}
+			else if (Index % 13 == 10)
+			{
+				StrDeck[Index] = "¢½ J";
+			}
+			else if (Index % 13 == 11)
+			{
+				StrDeck[Index] = "¢½ Q";
+			}
+			else if (Index % 13 == 12)
+			{
+				StrDeck[Index] = "¢½ K";
+			}
+		}
+		else if (Index / 13 == 1) {
+			if (Index % 13 == 1)
+			{
+				StrDeck[Index] = "¡Þ A";
+			}
+			else if (Index % 13 < 10)
+			{
+				StrDeck[Index] = "¡Þ " + to_string((Index % 13) + 1);
+			}
+			else if (Index % 13 == 10)
+			{
+				StrDeck[Index] = "¡Þ J";
+			}
+			else if (Index % 13 == 11)
+			{
+				StrDeck[Index] = "¡Þ Q";
+			}
+			else if (Index % 13 == 12)
+			{
+				StrDeck[Index] = "¡Þ K";
+			}
+		}
+		else if (Index / 13 == 2) {
+			if (Index % 13 == 1)
+			{
+				StrDeck[Index] = "¢À A";
+			}
+			else if (Index % 13 < 10)
+			{
+				StrDeck[Index] = "¢À " + to_string((Index % 13) + 1);
+			}
+			else if (Index % 13 == 10)
+			{
+				StrDeck[Index] = "¢À J";
+			}
+			else if (Index % 13 == 11)
+			{
+				StrDeck[Index] = "¢À Q";
+			}
+			else if (Index % 13 == 12)
+			{
+				StrDeck[Index] = "¢À K";
+			}
+		}
+		else if (Index / 13 == 3) {
+			if (Index % 13 == 1)
+			{
+				StrDeck[Index] = "¢¼ A";
+			}
+			else if (Index % 13 < 10)
+			{
+				StrDeck[Index] = "¢¼ " + to_string((Index % 13) + 1);
+			}
+			else if (Index % 13 == 10)
+			{
+				StrDeck[Index] = "¢¼ J";
+			}
+			else if (Index % 13 == 11)
+			{
+				StrDeck[Index] = "¢¼ Q";
+			}
+			else if (Index % 13 == 12)
+			{
+				StrDeck[Index] = "¢¼ K";
+			}
+		}
 	}
+	return 0;
 }
 
 void Shuffle() 
 {
-	int Temp;
-	for (int Count = 0; Count < POCKET_SIZE * 100; Count++)
+	srand((unsigned int)time(NULL));
+	string Temp;
+	for (int Count = 0; Count < CARD_NUMBER * 100; Count++)
 	{
-		int First = rand() % POCKET_SIZE;
-		int Second = rand() % POCKET_SIZE;
-		Temp = Pocket[First];
-		Pocket[First] = Pocket[Second];
-		Pocket[Second] = Temp;
+		int First = rand() % CARD_NUMBER;
+		int Second = rand() % CARD_NUMBER;
+		Temp = StrDeck[First];
+		StrDeck[First] = StrDeck[Second];
+		StrDeck[Second] = Temp;
 	}
 }
 
-void Print() 
+void Start() 
 {
-	for (int Index = 0; Index < POCKET_SIZE; Index++)
-	{
-		cout << Pocket[Index] << ", ";
-	}
+	cout << "Computer" << endl << "============" << endl;
+	cout << StrDeck[0] << ", " << StrDeck[1] << endl;
+	cout << "Player" << endl << "============" << endl;
+	cout << StrDeck[2] << ", " << StrDeck[3] << endl;
+	Count = 3;
 }
-
+	
 int main() 
 {
-	Initialize();
+	Count = Initialize();
 	Shuffle();
-	Print();
+	Start();
 }
 
 //int RandomRangeDemo(int RangeMin, int RangeMax) {
